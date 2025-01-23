@@ -16,6 +16,7 @@ import {
 	MediaRenderer,
 	NFT,
 	useActiveAccount,
+	useReadContract,
 } from "thirdweb/react";
 import { client } from "@/lib/thirdwebClient";
 import React from "react";
@@ -35,13 +36,43 @@ type Props = {
 };
 
 export function NftMint(props: Props) {
-	// console.log(props);
 	const [isMinting, setIsMinting] = useState(false);
 	const [quantity, setQuantity] = useState(1);
 	const [useCustomAddress, setUseCustomAddress] = useState(false);
 	const [customAddress, setCustomAddress] = useState("");
 	const { theme, setTheme } = useTheme();
 	const account = useActiveAccount();
+
+	// Fetch total supply and max supply for ERC721
+	const { data: totalSupply, isLoading: isTotalSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "totalSupply",
+		params: [],
+	});
+
+	const { data: maxSupply, isLoading: isMaxSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "maxSupply",
+		params: [],
+	});
+
+	// Fetch remaining supply for ERC1155
+	const { data: remainingSupply, isLoading: isRemainingSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "balanceOf",
+		params: [props.contract.address, props.tokenId],
+	});
+
+	// Calculate remaining supply based on contract type
+	const remainingNFTs = props.isERC721
+		? maxSupply && totalSupply
+			? Number(maxSupply) - Number(totalSupply)
+			: null
+		: props.isERC1155
+		? remainingSupply
+			? Number(remainingSupply)
+			: null
+		: null;
 
 	const decreaseQuantity = () => {
 		setQuantity((prev) => Math.max(1, prev - 1));
@@ -58,13 +89,15 @@ export function NftMint(props: Props) {
 		}
 	};
 
-	// const toggleTheme = () => {
-	// 	setTheme(theme === "dark" ? "light" : "dark");
-	// };
+	if (isTotalSupplyLoading || isMaxSupplyLoading || isRemainingSupplyLoading) {
+		return <div>Loading...</div>;
+	}
+
 	if (props.pricePerToken === null || props.pricePerToken === undefined) {
 		console.error("Invalid pricePerToken");
 		return null;
 	}
+
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
 			<div className="absolute top-4 right-4">
@@ -86,9 +119,7 @@ export function NftMint(props: Props) {
 								client={client}
 								className="w-full h-full object-cover"
 								alt=""
-								src={
-									props.contractImage || "/placeholder.svg?height=400&width=400"
-								}
+								src={props.contractImage || "/LO.png?height=400&width=400"}
 							/>
 						)}
 						<div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
@@ -101,6 +132,18 @@ export function NftMint(props: Props) {
 					<p className="text-gray-600 dark:text-gray-300 mb-4">
 						{props.description}
 					</p>
+
+					{/* Display remaining NFTs */}
+					{remainingNFTs === null ? (
+						<div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+							Remaining supply not available
+						</div>
+					) : (
+						<div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+							{remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
+						</div>
+					)}
+
 					<div className="flex items-center justify-between mb-4">
 						<div className="flex items-center">
 							<Button
@@ -178,18 +221,18 @@ export function NftMint(props: Props) {
 											from: account.address,
 										}
 									: props.isERC721
-										? {
-												type: "ERC721",
-												quantity: BigInt(quantity),
-												to: customAddress,
-												from: account.address,
-											}
-										: {
-												type: "ERC20",
-												quantity: String(quantity),
-												to: customAddress,
-												from: account.address,
-											}
+									? {
+											type: "ERC721",
+											quantity: BigInt(quantity),
+											to: customAddress,
+											from: account.address,
+										}
+									: {
+											type: "ERC20",
+											quantity: String(quantity),
+											to: customAddress,
+											from: account.address,
+										}
 							}
 							style={{
 								backgroundColor: "black",
@@ -203,7 +246,11 @@ export function NftMint(props: Props) {
 							}
 							onError={(err) => toast.error(err.message)}
 						>
-							Mint {quantity} NFT{quantity > 1 ? "s" : ""}
+							Mint {quantity} NFT{quantity > 1 ? "s" : ""} (
+							{remainingNFTs !== null
+								? `${remainingNFTs} remaining`
+								: "Supply unknown"}
+							)
 						</ClaimButton>
 					) : (
 						<ConnectButton

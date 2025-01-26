@@ -43,6 +43,9 @@ export function NftMint(props: Props) {
 	const { theme, setTheme } = useTheme();
 	const account = useActiveAccount();
 
+	// Fallback to "POL" if currencySymbol is null or undefined
+	const symbol = props.currencySymbol || "POL";
+
 	// Fetch total supply and max supply for ERC721
 	const { data: totalSupply, isLoading: isTotalSupplyLoading } = useReadContract({
 		contract: props.contract,
@@ -135,7 +138,7 @@ export function NftMint(props: Props) {
 								/>
 							)}
 							<div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
-								{props.pricePerToken} {props.currencySymbol}/each
+								{props.pricePerToken} {symbol}/each
 							</div>
 						</div>
 						<h2 className="text-2xl font-bold mb-2 text-white">
@@ -186,7 +189,7 @@ export function NftMint(props: Props) {
 								</Button>
 							</div>
 							<div className="text-base pr-1 font-semibold text-white">
-								Total: {props.pricePerToken * quantity} {props.currencySymbol}
+								Total: {props.pricePerToken * quantity} {symbol}
 							</div>
 						</div>
 

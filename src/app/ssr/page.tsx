@@ -42,18 +42,18 @@ export default function HomePage() {
 					href="/eac" // Route for EAC Trait Collection
 				/>
 				<Card
-					title="Mint Dark Ones"
-					description="Learn more about us"
+					title="Mint Dark Ones Collection"
+					description="Dark little creatures that earn you EAC"
 					href="/darkones" // Route for Dark Ones
 				/>
 				<Card
-					title="Mint Little Ones"
-					description="Explore our NFT collection"
+					title="Mint Little Ones Collection"
+					description="Little creatures that earn you EAC"
 					href="/littleones" // Route for Little Ones
 				/>
 				<Card
-					title="Mint Masterclass"
-					description="Get in touch with us"
+					title="Mint Masterclass Collection"
+					description="The masterclass NFT's of EAC"
 					href="/masterclass" // Route for Masterclass
 				/>
 			</div>

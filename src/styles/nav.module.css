@@ -1,0 +1,68 @@
+/* src/styles/nav.module.css */
+.nav {
+	background-color: #1f1f1f; /* Darker background for the menu */
+	padding: 15px 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center; /* Center items vertically */
+	position: relative; /* Ensure the container is positioned correctly */
+}
+
+/* Logo container */
+.logoContainer {
+	margin-right: auto; /* Push the logo to the left */
+}
+
+/* Logo image */
+.logo {
+	height: 40px; /* Adjust the height of the logo */
+	width: auto; /* Maintain aspect ratio */
+}
+
+.navList {
+	list-style: none;
+	display: flex;
+	justify-content: center; /* Center the navigation links */
+	align-items: center; /* Center items vertically */
+	margin: 0;
+	padding: 0;
+	position: absolute; /* Position the navList absolutely */
+	left: 50%; /* Move the navList to the center */
+	transform: translateX(-50%); /* Adjust for exact centering */
+}
+
+.navItem {
+	margin: 0 10px;
+}
+
+.navLink {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.navLink:hover {
+	color: #bb86fc; /* Light purple for hover effect */
+}
+
+/* Style for the ConnectButton container */
+.connectButtonContainer {
+	margin-left: auto; /* Push the ConnectButton to the right */
+}
+
+/* Optional: Style the ConnectButton itself */
+.connectButtonContainer button {
+	background-color: #000000; /* Green background */
+	color: white;
+	padding: 8px 16px;
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.connectButtonContainer button:hover {
+	background-color: #bb86fc; /* Darker green on hover */
+}

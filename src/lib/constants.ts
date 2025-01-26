@@ -1,7 +1,11 @@
 /**
  * Change this to the contract address of your NFT collection
  */
-export const defaultNftContractAddress = "0x2A3387a9F242Fb7961F77A3DC9532D4817998648";
+export const LittleOnesNftContractAddress = "0x2A3387a9F242Fb7961F77A3DC9532D4817998648";
+export const DarkOnesNftContractAddress = "0xB294568799EE8BFE0Cee72Ee91d1399Cc99A3033";
+export const MasterClassNftContractAddress = "0x79e03C415DF3140f844F10E3c03769be6362E768";
+export const EACTraitNftContractAddress = "0x1f157a5C6890A8d0B09F2BC666DFAa7421Da9238";
+
 
 /**
  * Change this to the chainId that your nft collection is deployed on

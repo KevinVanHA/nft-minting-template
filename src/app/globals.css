@@ -86,3 +86,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+	background-color: #121212; /* Dark background */
+	color: #ffffff; /* Light text */
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}

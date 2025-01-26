@@ -7,9 +7,13 @@ import { ToastProvider } from "@/components/ui/toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Define metadata
 export const metadata: Metadata = {
-	title: "NFT Minting template",
-	description: "A minting template powered by thirdweb",
+	title: "EAC Minting Platform",
+	description: "Your one-stop shop for minting all of the EAC NFTs.",
+	icons: {
+		icon: "/favicon.png", // Path to your favicon in the public folder
+	},
 };
 
 export default function RootLayout({

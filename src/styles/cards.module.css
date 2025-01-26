@@ -1,0 +1,75 @@
+
+
+.nav {
+	background-color: #1f1f1f; /* Darker background for the menu */
+	padding: 15px 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navList {
+	list-style: none;
+	display: flex;
+	justify-content: space-around;
+	margin: 0;
+	padding: 0;
+}
+
+.navItem {
+	margin: 0 10px;
+}
+
+.navLink {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.navLink:hover {
+	color: #bb86fc; /* Light purple for hover effect */
+}
+
+.cardContainer {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding: 40px 20px;
+}
+
+.card {
+	background-color: #1f1f1f; /* Dark card background */
+	border: 1px solid #333;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	width: 200px;
+	text-align: center;
+	padding: 20px;
+	cursor: pointer;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+	margin: 0;
+	font-size: 18px;
+	color: #ffffff;
+}
+
+.card p {
+	margin: 10px 0 0;
+	font-size: 14px;
+	color: #bbbbbb;
+}
+
+.content {
+	margin-top: 40px;
+	padding: 20px;
+	background-color: #1f1f1f;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

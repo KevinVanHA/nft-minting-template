@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 	title: "EAC Minting Platform",
 	description: "Your one-stop shop for minting all of the EAC NFTs. EAC!",
 	icons: {
-		icon: "/favicon.png", // Path to your favicon in the public folder
+		icon: "public/favicon.png", // Path to your favicon in the public folder
 	},
 };
 

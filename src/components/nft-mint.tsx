@@ -119,7 +119,7 @@ export function NftMint(props: Props) {
 			{/* Card and content */}
 			<div className="relative z-10"> {/* Ensure content is above the overlay */}
 				<Card className="w-full max-w-md bg-[#000000] bg-opacity-90"> {/* Slightly transparent background */}
-					<CardContent className="pt-6">
+					<CardContent className="p-12">
 						<div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
 							{props.isERC1155 ? (
 								<NFT contract={props.contract} tokenId={props.tokenId}>
@@ -253,6 +253,7 @@ export function NftMint(props: Props) {
 									backgroundColor: "#bb86fc",
 									color: "white",
 									width: "100%",
+									marginBottom: "30px",
 								}}
 								disabled={isMinting}
 								onTransactionSent={() => toast.info("Minting NFT")}
@@ -261,17 +262,15 @@ export function NftMint(props: Props) {
 								}
 								onError={(err) => toast.error(err.message)}
 							>
-								Mint {quantity} NFT{quantity > 1 ? "s" : ""} (
-								{remainingNFTs !== null
-									? `${remainingNFTs} remaining`
-									: "Supply unknown"}
-								)
+								Mint {quantity} NFT{quantity > 1 ? "s" : ""} 
 							</ClaimButton>
 						) : (
-							<ConnectButton
-								client={client}
-								connectButton={{ style: { width: "100%" } }}
-							/>
+							<div className="w-full p-12">
+								<ConnectButton
+									client={client}
+									connectButton={{ style: { width: "100%" } }}
+								/>
+							</div>
 						)}
 					</CardFooter>
 				</Card>

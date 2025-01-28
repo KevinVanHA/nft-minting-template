@@ -119,7 +119,7 @@ export function NftMint(props: Props) {
 								client={client}
 								className="w-full h-full object-cover"
 								alt=""
-								src={props.contractImage || "/LO.png?height=400&width=400"}
+								src={props.contractImage || "/placeholder.svg?height=400&width=400"}
 							/>
 						)}
 						<div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">

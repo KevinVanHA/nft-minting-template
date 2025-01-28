@@ -1,3 +1,5 @@
+import { polygon } from "thirdweb/chains";
+
 /**
  * Change this to the contract address of your NFT collection
  */
@@ -7,7 +9,7 @@ export const defaultNftContractAddress = "0xf1360565FC9d0De609581762D4ea45981a28
  * Change this to the chainId that your nft collection is deployed on
  * Look for your chain: https://thirdweb.com/chainlist
  */
-export const defaultChainId = 137;
+export const defaultChainId = polygon;
 
 /**
  * Only applicable to ERC1155 Edition Drop contract

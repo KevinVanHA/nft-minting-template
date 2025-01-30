@@ -1,7 +1,7 @@
 "use client";
 
 import { NftMint } from "@/components/nft-mint";
-import { NavigationMenu } from "@/components/NavigationMenu"; // Import the NavigationMenu component
+import { NavigationMenu } from "@/components/NavigationMenu";
 import {
 	defaultChainId,
 	DarkOnesNftContractAddress,
@@ -31,18 +31,22 @@ export default function LittleOnes() {
 		chain,
 		client,
 	});
+
+	// Queries for contract type and metadata
 	const isERC721Query = useReadContract(isERC721, { contract });
 	const isERC1155Query = useReadContract(isERC1155, { contract });
 	const contractMetadataQuery = useReadContract(getContractMetadata, {
 		contract,
 	});
 
+	// Query for NFT details (ERC1155 only)
 	const nftQuery = useReadContract(getNFT, {
 		contract,
 		tokenId,
 		queryOptions: { enabled: isERC1155Query.data },
 	});
 
+	// Query for claim conditions
 	const claimCondition1155 = useReadContract(getActiveClaimCondition1155, {
 		contract,
 		tokenId,
@@ -61,6 +65,7 @@ export default function LittleOnes() {
 		queryOptions: { enabled: !isERC721Query.data && !isERC1155Query.data },
 	});
 
+	// Determine display name and description
 	const displayName = isERC1155Query.data
 		? nftQuery.data?.metadata.name
 		: contractMetadataQuery.data?.name;
@@ -69,6 +74,7 @@ export default function LittleOnes() {
 		? nftQuery.data?.metadata.description
 		: contractMetadataQuery.data?.description;
 
+	// Determine price and currency
 	const priceInWei = isERC1155Query.data
 		? claimCondition1155.data?.pricePerToken
 		: isERC721Query.data
@@ -94,17 +100,21 @@ export default function LittleOnes() {
 
 	const currencySymbol = currencyMetadata.data?.symbol || "";
 
+	// Calculate price per token
 	const pricePerToken =
 		currencyMetadata.data && priceInWei !== null && priceInWei !== undefined
 			? Number(toTokens(priceInWei, currencyMetadata.data.decimals))
 			: null;
 
+	// Check if mint is closed
+	const isMintClosed = pricePerToken === null || pricePerToken === undefined;
+
 	return (
 		<div>
-			{/* Use the NavigationMenu component */}
+			{/* Navigation Menu */}
 			<NavigationMenu />
 
-			{/* Existing NFT Mint Component */}
+			{/* NFT Mint Component */}
 			<NftMint
 				contract={contract}
 				displayName={displayName || ""}
@@ -115,6 +125,7 @@ export default function LittleOnes() {
 				isERC1155={!!isERC1155Query.data}
 				isERC721={!!isERC721Query.data}
 				tokenId={tokenId}
+				isMintClosed={isMintClosed} // Pass the mint status
 			/>
 		</div>
 	);

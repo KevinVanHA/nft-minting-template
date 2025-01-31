@@ -11,12 +11,12 @@ import { Minus, Plus } from "lucide-react";
 import { useTheme } from "next-themes";
 import type { ThirdwebContract } from "thirdweb";
 import {
-  ClaimButton,
-  ConnectButton,
-  MediaRenderer,
-  NFT,
-  useActiveAccount,
-  useReadContract,
+	ClaimButton,
+	ConnectButton,
+	MediaRenderer,
+	NFT,
+	useActiveAccount,
+	useReadContract,
 } from "thirdweb/react";
 import { client } from "@/lib/thirdwebClient";
 import React from "react";
@@ -24,278 +24,278 @@ import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
 
 type Props = {
-  contract: ThirdwebContract;
-  displayName: string;
-  description: string;
-  contractImage: string;
-  pricePerToken: number | null;
-  currencySymbol: string | null;
-  isERC1155: boolean;
-  isERC721: boolean;
-  tokenId: bigint;
-  isMintClosed: boolean; // New prop
+	contract: ThirdwebContract;
+	displayName: string;
+	description: string;
+	contractImage: string;
+	pricePerToken: number | null;
+	currencySymbol: string | null;
+	isERC1155: boolean;
+	isERC721: boolean;
+	tokenId: bigint;
+	isMintClosed: boolean;
 };
 
 export function NftMint(props: Props) {
-  const [isMinting, setIsMinting] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [useCustomAddress, setUseCustomAddress] = useState(false);
-  const [customAddress, setCustomAddress] = useState("");
-  const { theme, setTheme } = useTheme();
-  const account = useActiveAccount();
+	const [isMinting, setIsMinting] = useState(false);
+	const [quantity, setQuantity] = useState(1);
+	const [useCustomAddress, setUseCustomAddress] = useState(false);
+	const [customAddress, setCustomAddress] = useState("");
+	const { theme, setTheme } = useTheme();
+	const account = useActiveAccount();
 
-  const symbol = props.currencySymbol || "POL";
+	// Fallback to "POL" if currencySymbol is null or undefined
+	const symbol = props.currencySymbol || "POL";
 
-  // Fetch supply data
-  const { data: totalSupply, isLoading: isTotalSupplyLoading } = useReadContract({
-    contract: props.contract,
-    method: "totalSupply",
-    params: [],
-  });
+	// Fetch total supply and max supply for ERC721
+	const { data: totalSupply, isLoading: isTotalSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "totalSupply",
+		params: [],
+	});
 
-  const { data: maxSupply, isLoading: isMaxSupplyLoading } = useReadContract({
-    contract: props.contract,
-    method: "maxSupply",
-    params: [],
-  });
+	const { data: maxSupply, isLoading: isMaxSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "maxSupply",
+		params: [],
+	});
 
-  const { data: remainingSupply, isLoading: isRemainingSupplyLoading } = useReadContract({
-    contract: props.contract,
-    method: "balanceOf",
-    params: [props.contract.address, props.tokenId],
-  });
+	// Fetch remaining supply for ERC1155
+	const { data: remainingSupply, isLoading: isRemainingSupplyLoading } = useReadContract({
+		contract: props.contract,
+		method: "balanceOf",
+		params: [props.contract.address, props.tokenId],
+	});
 
-  const remainingNFTs = props.isERC721
-    ? maxSupply && totalSupply
-      ? Number(maxSupply) - Number(totalSupply)
-      : null
-    : props.isERC1155
-    ? remainingSupply
-      ? Number(remainingSupply)
-      : null
-    : null;
+	// Calculate remaining supply based on contract type
+	const remainingNFTs = props.isERC721
+		? maxSupply && totalSupply
+			? Number(maxSupply) - Number(totalSupply)
+			: null
+		: props.isERC1155
+		? remainingSupply
+			? Number(remainingSupply)
+			: null
+		: null;
 
-  const decreaseQuantity = () => {
-    setQuantity((prev) => Math.max(1, prev - 1));
-  };
+	const decreaseQuantity = () => {
+		setQuantity((prev) => Math.max(1, prev - 1));
+	};
 
-  const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
-  };
+	const increaseQuantity = () => {
+		setQuantity((prev) => prev + 1); // Assuming a max of 10 NFTs can be minted at once
+	};
 
-  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number.parseInt(e.target.value);
-    if (!Number.isNaN(value)) {
-      setQuantity(Math.min(Math.max(1, value)));
-    }
-  };
+	const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = Number.parseInt(e.target.value);
+		if (!Number.isNaN(value)) {
+			setQuantity(Math.min(Math.max(1, value)));
+		}
+	};
 
-  if (isTotalSupplyLoading || isMaxSupplyLoading || isRemainingSupplyLoading) {
-    return <div>Loading...</div>;
-  }
+	// Handle loading state
+	if (isTotalSupplyLoading || isMaxSupplyLoading || isRemainingSupplyLoading) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="text-center text-white">Loading...</div>
+			</div>
+		);
+	}
 
-  if (props.pricePerToken === null || props.pricePerToken === undefined) {
-    return null;
-  }
+	// Handle invalid pricePerToken or closed mint
+	if (props.pricePerToken === null || props.pricePerToken === undefined || props.isMintClosed) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="text-center text-white bg-red-500 p-6 rounded-lg">
+					{props.isMintClosed
+						? "Minting is currently closed. Please check back later."
+						: "Invalid price information. Minting is unavailable."}
+				</div>
+			</div>
+		);
+	}
 
-  return (
-    <div
-      className="flex flex-col items-center justify-center min-h-screen transition-colors duration-200 pt-10 pb-15 relative"
-      style={{
-        backgroundImage: "url('/background.gif')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+	return (
+		<div
+			className="flex flex-col items-center justify-center min-h-screen transition-colors duration-200 pt-10 pb-15 relative"
+			style={{
+				backgroundImage: "url('/background.gif')", // Set the GIF as the background
+				backgroundSize: "cover", // Ensure the background covers the entire page
+				backgroundPosition: "center", // Center the background
+				backgroundRepeat: "no-repeat", // Prevent the background from repeating
+			}}
+		>
+			{/* Overlay to darken the background */}
+			<div
+				className="absolute inset-0 bg-black bg-opacity-70" // Semi-transparent black overlay
+			></div>
 
-      <div className="relative z-10">
-        <Card className="w-full max-w-md bg-[#000000] bg-opacity-90">
-          <CardContent className="p-12">
-            <div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
-              {props.isERC1155 ? (
-                <NFT contract={props.contract} tokenId={props.tokenId}>
-                  <React.Suspense
-                    fallback={<Skeleton className="w-full h-full object-cover" />}
-                  >
-                    <NFT.Media className="w-full h-full object-cover" />
-                  </React.Suspense>
-                </NFT>
-              ) : (
-                <MediaRenderer
-                  client={client}
-                  className="w-full h-full object-cover"
-                  alt=""
-                  src={props.contractImage || "/LO.png?height=400&width=400"}
-                />
-              )}
-              <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
-                {props.pricePerToken} {symbol}/each
-              </div>
-            </div>
-            <h2 className="text-2xl font-bold mb-2 text-white">
-              {props.displayName}
-            </h2>
-            <p className="text-gray-300 mb-4">
-              {props.description}
-            </p>
+			{/* Card and content */}
+			<div className="relative z-10"> {/* Ensure content is above the overlay */}
+				<Card className="w-full max-w-md bg-[#000000] bg-opacity-90"> {/* Slightly transparent background */}
+					<CardContent className="p-12">
+						<div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
+							{props.isERC1155 ? (
+								<NFT contract={props.contract} tokenId={props.tokenId}>
+									<React.Suspense
+										fallback={<Skeleton className="w-full h-full object-cover" />}
+									>
+										<NFT.Media className="w-full h-full object-cover" />
+									</React.Suspense>
+								</NFT>
+							) : (
+								<MediaRenderer
+									client={client}
+									className="w-full h-full object-cover"
+									alt=""
+									src={props.contractImage || "/LO.png?height=400&width=400"}
+								/>
+							)}
+							<div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
+								{props.pricePerToken} {symbol}/each
+							</div>
+						</div>
+						<h2 className="text-2xl font-bold mb-2 text-white">
+							{props.displayName}
+						</h2>
+						<p className="text-gray-300 mb-4">
+							{props.description}
+						</p>
 
-            {remainingNFTs === null ? (
-              <div className="text-sm text-gray-300 mb-4">
-                Remaining supply not available
-              </div>
-            ) : (
-              <div className="text-sm text-white mb-4">
-                {remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
-              </div>
-            )}
+						{/* Display remaining NFTs */}
+						{remainingNFTs === null ? (
+							<div className="text-sm text-gray-300 mb-4">
+								Remaining supply not available
+							</div>
+						) : (
+							<div className="text-sm text-white mb-4">
+								{remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
+							</div>
+						)}
 
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={decreaseQuantity}
-                  disabled={quantity <= 1 || props.isMintClosed}
-                  aria-label="Decrease quantity"
-                  className="rounded-r-none"
-                >
-                  <Minus className="h-4 w-4" />
-                </Button>
-                <Input
-                  type="number"
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  className="w-28 text-center rounded-none border-x-0 pl-6"
-                  min="1"
-                  disabled={props.isMintClosed}
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={increaseQuantity}
-                  aria-label="Increase quantity"
-                  className="rounded-l-none"
-                  disabled={props.isMintClosed}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-              <div className="text-base pr-1 font-semibold text-white">
-                Total: {props.pricePerToken * quantity} {symbol}
-              </div>
-            </div>
+						<div className="flex items-center justify-between mb-4">
+							<div className="flex items-center">
+								<Button
+									variant="outline"
+									size="icon"
+									onClick={decreaseQuantity}
+									disabled={quantity <= 1}
+									aria-label="Decrease quantity"
+									className="rounded-r-none"
+								>
+									<Minus className="h-4 w-4" />
+								</Button>
+								<Input
+									type="number"
+									value={quantity}
+									onChange={handleQuantityChange}
+									className="w-28 text-center rounded-none border-x-0 pl-6"
+									min="1"
+								/>
+								<Button
+									variant="outline"
+									size="icon"
+									onClick={increaseQuantity}
+									aria-label="Increase quantity"
+									className="rounded-l-none"
+								>
+									<Plus className="h-4 w-4" />
+								</Button>
+							</div>
+							<div className="text-base pr-1 font-semibold text-white">
+								Total: {props.pricePerToken * quantity} {symbol}
+							</div>
+						</div>
 
-            <div className="flex items-center space-x-2 mb-4">
-              <Switch
-                id="custom-address"
-                checked={useCustomAddress}
-                onCheckedChange={setUseCustomAddress}
-                disabled={props.isMintClosed}
-              />
-              <Label
-                htmlFor="custom-address"
-                className={`${useCustomAddress ? "text-white" : "text-gray-400"} cursor-pointer`}
-              >
-                Mint to a custom address
-              </Label>
-            </div>
-            {useCustomAddress && (
-              <div className="mb-4">
-                <Input
-                  id="address-input"
-                  type="text"
-                  placeholder="Enter recipient address"
-                  value={customAddress}
-                  onChange={(e) => setCustomAddress(e.target.value)}
-                  className="w-full"
-                  disabled={props.isMintClosed}
-                />
-              </div>
-            )}
-          </CardContent>
-          <CardFooter>
-            {account ? (
-              <ClaimButton
-                theme={"light"}
-                contractAddress={props.contract.address}
-                chain={props.contract.chain}
-                client={props.contract.client}
-                claimParams={
-                  props.isERC1155
-                    ? {
-                        type: "ERC1155",
-                        tokenId: props.tokenId,
-                        quantity: BigInt(quantity),
-                        to: customAddress,
-                        from: account.address,
-                      }
-                    : props.isERC721
-                    ? {
-                        type: "ERC721",
-                        quantity: BigInt(quantity),
-                        to: customAddress,
-                        from: account.address,
-                      }
-                    : {
-                        type: "ERC20",
-                        quantity: String(quantity),
-                        to: customAddress,
-                        from: account.address,
-                      }
-                }
-                style={{
-                  backgroundColor: props.isMintClosed ? "#4a5568" : "#bb86fc",
-                  color: "white",
-                  width: "100%",
-                  marginBottom: "30px",
-                  cursor: props.isMintClosed ? "not-allowed" : "pointer",
-                }}
-                disabled={props.isMintClosed || isMinting}
-                onTransactionSent={() => {
-                  if (!props.isMintClosed) {
-                    setIsMinting(true);
-                    toast.info("Minting NFT");
-                  }
-                }}
-                onTransactionConfirmed={() => {
-                  if (!props.isMintClosed) {
-                    setIsMinting(false);
-                    toast.success("Minted successfully");
-                  }
-                }}
-                onError={(err) => {
-                  if (!props.isMintClosed) {
-                    setIsMinting(false);
-                    toast.error(err.message);
-                  }
-                }}
-              >
-                {props.isMintClosed ? (
-                  "Mint Closed"
-                ) : (
-                  `Mint ${quantity} NFT${quantity > 1 ? "s" : ""}`
-                )}
-              </ClaimButton>
-            ) : (
-              <div className="w-full p-12">
-                <ConnectButton
-                  client={client}
-                  connectButton={{ style: { width: "100%" } }}
-                />
-              </div>
-            )}
-          </CardFooter>
-        </Card>
-      </div>
+						<div className="flex items-center space-x-2 mb-4">
+							<Switch
+								id="custom-address"
+								checked={useCustomAddress}
+								onCheckedChange={setUseCustomAddress}
+							/>
+							<Label
+								htmlFor="custom-address"
+								className={`${useCustomAddress ? "text-white" : "text-gray-400"} cursor-pointer`}
+							>
+								Mint to a custom address
+							</Label>
+						</div>
+						{useCustomAddress && (
+							<div className="mb-4">
+								<Input
+									id="address-input"
+									type="text"
+									placeholder="Enter recipient address"
+									value={customAddress}
+									onChange={(e) => setCustomAddress(e.target.value)}
+									className="w-full"
+								/>
+							</div>
+						)}
+					</CardContent>
+					<CardFooter>
+						{account ? (
+							<ClaimButton
+								theme={"light"}
+								contractAddress={props.contract.address}
+								chain={props.contract.chain}
+								client={props.contract.client}
+								claimParams={
+									props.isERC1155
+										? {
+												type: "ERC1155",
+												tokenId: props.tokenId,
+												quantity: BigInt(quantity),
+												to: customAddress,
+												from: account.address,
+											}
+										: props.isERC721
+										? {
+												type: "ERC721",
+												quantity: BigInt(quantity),
+												to: customAddress,
+												from: account.address,
+											}
+										: {
+												type: "ERC20",
+												quantity: String(quantity),
+												to: customAddress,
+												from: account.address,
+											}
+								}
+								style={{
+									backgroundColor: "#bb86fc",
+									color: "white",
+									width: "100%",
+									marginBottom: "30px",
+								}}
+								disabled={isMinting}
+								onTransactionSent={() => toast.info("Minting NFT")}
+								onTransactionConfirmed={() =>
+									toast.success("Minted successfully")
+								}
+								onError={(err) => toast.error(err.message)}
+							>
+								Mint {quantity} NFT{quantity > 1 ? "s" : ""} 
+							</ClaimButton>
+						) : (
+							<div className="w-full p-12">
+								<ConnectButton
+									client={client}
+									connectButton={{ style: { width: "100%" } }}
+								/>
+							</div>
+						)}
+					</CardFooter>
+				</Card>
+			</div>
 
-      {true && (
-        <Toast className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-md">
-          Successfully minted {quantity} NFT{quantity > 1 ? "s" : ""}
-          {useCustomAddress && customAddress ? ` to ${customAddress}` : ""}!
-        </Toast>
-      )}
-    </div>
-  );
+			{true && (
+				<Toast className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-md">
+					Successfully minted {quantity} NFT{quantity > 1 ? "s" : ""}
+					{useCustomAddress && customAddress ? ` to ${customAddress}` : ""}!
+				</Toast>
+			)}
+		</div>
+	);
 }

@@ -105,11 +105,27 @@ export function NftMint(props: Props) {
 	// Handle invalid pricePerToken or closed mint
 	if (props.pricePerToken === null || props.pricePerToken === undefined || props.isMintClosed) {
 		return (
-			<div className="flex items-center justify-center min-h-screen">
+			<div className="flex flex-col items-center justify-center min-h-screen gap-4">
 				<div className="text-center text-white bg-red-500 p-6 rounded-lg">
 					{props.isMintClosed
 						? "Minting is currently closed. Please check back later."
 						: "Invalid price information. Minting is unavailable."}
+				</div>
+
+				{/* Twitter and Discord Buttons */}
+				<div className="flex gap-4">
+					<Button
+						onClick={() => window.open("https://x.com/eacnft", "_blank")}
+						className="bg-black hover:bg-blue-600 text-white"
+					>
+						X
+					</Button>
+					<Button
+						onClick={() => window.open("https://discord.gg/eacnft", "_blank")}
+						className="bg-purple-500 hover:bg-purple-600 text-white"
+					>
+						Discord
+					</Button>
 				</div>
 			</div>
 		);

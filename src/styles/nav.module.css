@@ -1,130 +1,123 @@
-/* Base styles */
+/* nav.module.css */
 .nav {
-	background-color: #1f1f1f; /* Darker background for the menu */
-	padding: 15px 20px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	display: flex;
-	align-items: center; /* Center items vertically */
-	position: relative; /* Ensure the container is positioned correctly */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #000; /* or your preferred background color */
+    color: #fff; /* or your preferred text color */
 }
 
-/* Logo container */
 .logoContainer {
-	margin-right: auto; /* Push the logo to the left */
+    display: flex;
+    align-items: center;
 }
 
-/* Logo image */
 .logo {
-	height: 40px; /* Adjust the height of the logo */
-	width: auto; /* Maintain aspect ratio */
+    height: 40px; /* adjust based on your logo size */
 }
 
-/* Navigation links */
-.navList {
-	list-style: none;
-	display: flex;
-	justify-content: center; /* Center the navigation links */
-	align-items: center; /* Center items vertically */
-	margin: 0;
-	padding: 0;
-	position: absolute; /* Position the navList absolutely */
-	left: 50%; /* Move the navList to the center */
-	transform: translateX(-50%); /* Adjust for exact centering */
-}
-
-.navItem {
-	margin: 0 10px;
-}
-
-.navLink {
-	color: #ffffff;
-	text-decoration: none;
-	font-size: 16px;
-	font-weight: bold;
-}
-
-.navLink:hover {
-	color: #bb86fc; /* Light purple for hover effect */
-}
-
-/* Style for the ConnectButton container */
-.connectButtonContainer {
-	margin-left: auto; /* Push the ConnectButton to the right */
-}
-
-/* Optional: Style the ConnectButton itself */
-.connectButtonContainer button,
-.mobileConnectButton button {
-	background-color: #000000; /* Black background */
-	color: white;
-	padding: 8px 16px;
-	border-radius: 4px;
-	font-size: 14px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-}
-
-.connectButtonContainer button:hover,
-.mobileConnectButton button:hover {
-	background-color: #bb86fc; /* Light purple on hover */
-}
-
-/* Hamburger menu styles (hidden by default) */
 .hamburgerMenu {
-	display: none;
-	cursor: pointer;
+    cursor: pointer;
+    display: none; /* hide on larger screens */
 }
 
 .icon {
-	width: 24px;
-	height: 24px;
-	color: #fff; /* White color for the icon */
+    width: 24px;
+    height: 24px;
+    color: #fff; /* or your preferred icon color */
 }
 
-/* Responsive styles */
+.navList {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navItem {
+    margin-left: 20px;
+    position: relative; /* Ensure dropdowns are positioned relative to the navItem */
+}
+
+.navLink {
+    color: #fff; /* or your preferred link color */
+    text-decoration: none;
+    font-size: 16px; /* adjust font size as needed */
+    line-height: 1.5; /* adjust line height as needed */
+    white-space: normal; /* allow text to wrap */
+    word-break: break-word; /* break long words if necessary */
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the navItem */
+    left: 0;
+    right: 0; /* Ensure it fits within the parent container */
+    max-width: 300px; /* Limit the width */
+    background-color: #000; /* or your preferred background color */
+    color: #fff; /* or your preferred text color */
+    padding: 10px;
+    z-index: 1001;
+}
+
+.navItem:hover .dropdown {
+    display: block;
+}
+
+.connectButtonContainer {
+    display: flex;
+    align-items: center;
+}
+
+.mobileConnectButton {
+    display: none; /* hide on larger screens */
+}
+
 @media (max-width: 768px) {
-	/* Hide the regular nav list on small screens */
-	.navList {
-		display: none;
-		flex-direction: column;
-		background-color: #1f1f1f; /* Match the nav background */
-		position: absolute;
-		top: 100%; /* Position below the nav */
-		left: 0;
-		right: 0;
-		padding: 1rem;
-		gap: 1rem;
-		z-index: 1000;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
-		min-height: calc(100vh - 64px); /* Ensure the menu covers the entire screen height minus the nav height */
-		max-height: 100%; /* Limit the maximum height to avoid overflow */
-		overflow-y: auto; /* Allow scrolling if content overflows */
-	}
+    .hamburgerMenu {
+        display: block; /* show on smaller screens */
+    }
 
-	/* Show the nav list when the menu is open */
-	.navList.open {
-		display: flex;
-		flex-direction: column;
-		align-items: center; /* Center items horizontally */
-		padding-top: 1rem;
-	}
+    .navList {
+        display: flex;
+        flex-direction: column;
+        background-color: #000; /* or your preferred background color */
+        padding: 20px;
+        position: absolute;
+        top: 60px; /* adjust based on your logo height */
+        left: 0;
+        width: 100%; /* take full width of the screen */
+        max-width: 300px; /* limit the width if needed */
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
 
-	/* Show the hamburger menu on small screens */
-	.hamburgerMenu {
-		display: block;
-		margin-left: auto; /* Push the hamburger icon to the right */
-	}
+    .navList.open {
+        transform: translateX(0);
+    }
 
-	/* Hide the main ConnectButton on small screens */
-	.connectButtonContainer {
-		display: none; /* Hide the ConnectButton in the main nav on small screens */
-	}
+    .navItem {
+        margin-bottom: 10px;
+        margin-left: 0;
+    }
 
-	/* Style for the ConnectButton inside the mobile menu */
-	.mobileConnectButton {
-		display: flex;
-		justify-content: center;
-		margin-top: 1rem;
-	}
+    .navLink {
+        font-size: 14px; /* reduce font size on small screens */
+    }
+
+    .connectButtonContainer {
+        display: none; /* hide on smaller screens */
+    }
+
+    .mobileConnectButton {
+        display: block; /* show on smaller screens */
+    }
+
+    .dropdown {
+        position: static; /* Change to static for mobile */
+        max-width: 100%; /* Take full width on mobile */
+    }
 }

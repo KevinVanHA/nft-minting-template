@@ -65,13 +65,6 @@ export default function LittleOnes() {
 		queryOptions: { enabled: !isERC721Query.data && !isERC1155Query.data },
 	});
 
-	// Query to check if mint is open
-	const isMintOpenQuery = useReadContract({
-		contract,
-		method: "isMintOpen", // Name of the function in your contract
-		params: [], // No arguments are passed to `isMintOpen`
-	});
-
 	// Determine display name and description
 	const displayName = isERC1155Query.data
 		? nftQuery.data?.metadata.name
@@ -114,7 +107,7 @@ export default function LittleOnes() {
 			: null;
 
 	// Check if mint is closed
-	const isMintClosed = !isMintOpenQuery.data || pricePerToken === null || pricePerToken === undefined;
+	const isMintClosed = pricePerToken === null || pricePerToken === undefined;
 
 	return (
 		<div>

@@ -145,9 +145,9 @@ export function NftMint(props: Props) {
             {/* Card and content */}
             <div className="relative z-10 w-full max-w-4xl"> {/* Adjust width for horizontal layout */}
                 <Card className="w-full bg-[#000000] bg-opacity-90 rounded-lg overflow-hidden">
-                    <CardContent className="p-6 flex flex-row gap-8"> {/* Horizontal layout */}
+                    <CardContent className="p-6 flex flex-col sm:flex-row gap-8"> {/* Responsive layout */}
                         {/* Image Section */}
-                        <div className="flex-shrink-0 w-1/2">
+                        <div className="flex-shrink-0 w-full sm:w-1/2">
                             <div className="aspect-square overflow-hidden rounded-lg relative">
                                 {props.isERC1155 ? (
                                     <NFT contract={props.contract} tokenId={props.tokenId}>
@@ -172,7 +172,7 @@ export function NftMint(props: Props) {
                         </div>
 
                         {/* Details Section */}
-                        <div className="flex-grow w-1/2 space-y-4">
+                        <div className="flex-grow w-full sm:w-1/2 space-y-4">
                             <h2 className="text-2xl font-bold text-white">{props.displayName}</h2>
                             <p className="text-gray-300">{props.description}</p>
 

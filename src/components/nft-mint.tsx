@@ -1,8 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Toast } from "@/components/ui/toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -132,22 +132,21 @@ export function NftMint(props: Props) {
         <div
             className="flex flex-col items-center justify-center min-h-screen transition-colors duration-200 pt-10 pb-15 relative"
             style={{
-                backgroundImage: "url('/background.gif')", // Set the GIF as the background
-                backgroundSize: "cover", // Ensure the background covers the entire page
-                backgroundPosition: "center", // Center the background
-                backgroundRepeat: "no-repeat", // Prevent the background from repeating
+                backgroundColor: "#8400e9",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
             }}
         >
             {/* Overlay to darken the background */}
-            <div
-                className="absolute inset-0 bg-black bg-opacity-70" // Semi-transparent black overlay
-            ></div>
+            <div className="absolute inset-0 bg-black bg-opacity-0"></div>
+
             {/* Card and content */}
-            <div className="relative z-10 w-full max-w-4xl"> {/* Adjust width for horizontal layout */}
+            <div className="relative z-10 w-full max-w-4xl">
                 <Card className="w-full bg-[#000000] bg-opacity-90 rounded-lg overflow-hidden">
-                    <CardContent className="p-6 flex flex-col sm:flex-row gap-8"> {/* Responsive layout */}
+                    <CardContent className="p-6 flex flex-col sm:flex-row gap-8 items-center">
                         {/* Image Section */}
-                        <div className="flex-shrink-0 w-full sm:w-1/2">
+                        <div className="flex-shrink-0 w-full sm:w-1/2 m-4">
                             <div className="aspect-square overflow-hidden rounded-lg relative">
                                 {props.isERC1155 ? (
                                     <NFT contract={props.contract} tokenId={props.tokenId}>
@@ -172,18 +171,8 @@ export function NftMint(props: Props) {
                         </div>
 
                         {/* Details Section */}
-                        <div className="flex-grow w-full sm:w-1/2 space-y-4">
-                            <h2 className="text-2xl font-bold text-white">{props.displayName}</h2>
-                            <p className="text-gray-300">{props.description}</p>
-
-                            {/* Display remaining NFTs */}
-                            {remainingNFTs === null ? (
-                                <div className="text-sm text-gray-300">Remaining supply not available</div>
-                            ) : (
-                                <div className="text-sm text-white">
-                                    {remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
-                                </div>
-                            )}
+                        <div className="flex-grow w-full sm:w-1/2 space-y-4 m-4 p-4">
+                            <h2 className="text-2xl font-bold text-white text-align-center">{props.displayName}</h2>
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center">
@@ -201,7 +190,7 @@ export function NftMint(props: Props) {
                                         type="number"
                                         value={quantity}
                                         onChange={handleQuantityChange}
-                                        className="w-28 text-center rounded-none border-x-0 pl-6"
+                                        className="w-20 text-center rounded-none border-x-0 pl-6"
                                         min="1"
                                     />
                                     <Button
@@ -215,7 +204,7 @@ export function NftMint(props: Props) {
                                     </Button>
                                 </div>
                                 <div className="text-base pr-1 font-semibold text-white">
-                                    Total: {props.pricePerToken * quantity} {symbol}
+                                    Total: <br /> {props.pricePerToken * quantity} {symbol}
                                 </div>
                             </div>
 
@@ -277,7 +266,7 @@ export function NftMint(props: Props) {
                                                     }
                                         }
                                         style={{
-                                            backgroundColor: "#bb86fc",
+                                            backgroundColor: "#8400e9",
                                             color: "white",
                                             width: "100%",
                                             marginBottom: "30px",

@@ -36,7 +36,7 @@ export function NavigationMenu() {
                 </li>
                 <li className={styles.navItem}>
                     <Link href="/eac" className={styles.navLink}>
-                        Mint EAC Trait Collection
+                        EAC Trait Collection
                     </Link>
                     <div className={styles.dropdown}>
                         {/* Dropdown content */}
@@ -44,7 +44,7 @@ export function NavigationMenu() {
                 </li>
                 <li className={styles.navItem}>
                     <Link href="/littleones" className={styles.navLink}>
-                        Mint Little Ones
+                        Little Ones
                     </Link>
                     <div className={styles.dropdown}>
                         {/* Dropdown content */}
@@ -52,7 +52,7 @@ export function NavigationMenu() {
                 </li>
                 <li className={styles.navItem}>
                     <Link href="/darkones" className={styles.navLink}>
-                        Mint Dark Ones
+                        Dark Ones
                     </Link>
                     <div className={styles.dropdown}>
                         {/* Dropdown content */}
@@ -60,7 +60,7 @@ export function NavigationMenu() {
                 </li>
                 <li className={styles.navItem}>
                     <Link href="/masterclass" className={styles.navLink}>
-                        Mint Masterclass
+                        Masterclass
                     </Link>
                     <div className={styles.dropdown}>
                         {/* Dropdown content */}

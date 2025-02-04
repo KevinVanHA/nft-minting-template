@@ -99,7 +99,7 @@ export function NftMint(props: Props) {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+		<div className="flex flex-col items-center justify-center min-h-screen bg-black dark:bg-black transition-colors duration-200">
 			<div className="absolute top-4 right-4">
 				<ConnectButton client={client} />
 			</div>
@@ -133,16 +133,7 @@ export function NftMint(props: Props) {
 						{props.description}
 					</p>
 
-					{/* Display remaining NFTs */}
-					{remainingNFTs === null ? (
-						<div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-							Remaining supply not available
-						</div>
-					) : (
-						<div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-							{remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
-						</div>
-					)}
+					
 
 					<div className="flex items-center justify-between mb-4">
 						<div className="flex items-center">

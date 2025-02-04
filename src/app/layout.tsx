@@ -8,8 +8,8 @@ import { ToastProvider } from "@/components/ui/toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Gangskullz Minting Website",
-	description: "Mint your very own Gangskullz!",
+	title: "Snout Zoo 2025 Mint",
+	description: "Snout Zoo, created by Snout Bears & Pengwins, is more than just an NFT project—it's a bridge between Web3 and real-world impact.",
 };
 
 export default function RootLayout({

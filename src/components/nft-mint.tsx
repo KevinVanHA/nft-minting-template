@@ -99,11 +99,19 @@ export function NftMint(props: Props) {
 	}
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-black dark:bg-black transition-colors duration-200">
-			<div className="absolute top-4 right-4">
+		<div className="flex flex-col items-center justify-center min-h-screen bg-black dark:bg-black transition-colors duration-200 relative">
+			{/* Background Image with Overlay */}
+			<div
+				className="absolute inset-0 bg-cover bg-center z-0"
+				style={{ backgroundImage: "url('/bg.jpg')" }}
+			>
+				<div className="absolute inset-0 bg-black bg-opacity-70 z-10"></div>
+			</div>
+
+			<div className="absolute top-4 right-4 z-20">
 				<ConnectButton client={client} />
 			</div>
-			<Card className="w-full max-w-md bg-gray-100">
+			<Card className="w-full max-w-md bg-gray-100 z-20">
 				<CardContent className="pt-6">
 					<div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
 						{props.isERC1155 ? (
@@ -132,8 +140,6 @@ export function NftMint(props: Props) {
 					<p className="text-gray-600 dark:text-gray-300 mb-4">
 						{props.description}
 					</p>
-
-					
 
 					<div className="flex items-center justify-between mb-4">
 						<div className="flex items-center">
@@ -252,7 +258,7 @@ export function NftMint(props: Props) {
 				</CardFooter>
 			</Card>
 			{true && (
-				<Toast className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-md">
+				<Toast className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-md z-20">
 					Successfully minted {quantity} NFT{quantity > 1 ? "s" : ""}
 					{useCustomAddress && customAddress ? ` to ${customAddress}` : ""}!
 				</Toast>

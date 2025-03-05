@@ -22,6 +22,7 @@ import { client } from "@/lib/thirdwebClient";
 import React from "react";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
+import AboutSection from "./AboutSection";
 
 type Props = {
   contract: ThirdwebContract;
@@ -102,15 +103,13 @@ export function NftMint(props: Props) {
     <div 
       className="flex flex-col items-center justify-center min-h-screen relative"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/bg.jpg)`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url(/bg.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <div className="absolute top-4 right-4">
-        <ConnectButton client={client} />
-      </div>
+     <AboutSection />
       <Card className="w-full max-w-md z-10">
         <CardContent className="pt-6">
           <div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
@@ -130,9 +129,9 @@ export function NftMint(props: Props) {
                 src={props.contractImage || "/placeholder.svg?height=400&width=400"}
               />
             )}
-            <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
-              {props.pricePerToken} {props.currencySymbol}/each
-            </div>
+          </div>
+          <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
+            20 pol each
           </div>
           <h2 className="text-2xl font-bold mb-2 dark:text-white">
             {props.displayName}

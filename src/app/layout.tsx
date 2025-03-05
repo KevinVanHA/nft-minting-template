@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThirdwebProvider } from "thirdweb/react";
 import { Toaster } from "sonner";
+import Navbar from '@/components/Navbar';
 import { ToastProvider } from "@/components/ui/toast";
+import { QueryProvider } from "@/components/QueryProvider";
+import { ThirdwebProviderWrapper } from "@/components/ThirdwebProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,10 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<ToastProvider>
 					<Toaster position="bottom-center" />
-					<ThirdwebProvider>{children}</ThirdwebProvider>
+					<QueryProvider>
+          				<ThirdwebProviderWrapper><Navbar /></ThirdwebProviderWrapper>
+						<ThirdwebProviderWrapper>{children}</ThirdwebProviderWrapper>
+					</QueryProvider>
 				</ToastProvider>
 			</body>
 		</html>

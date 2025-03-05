@@ -10,8 +10,8 @@ import { ThirdwebProviderWrapper } from "@/components/ThirdwebProviderWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Gangskullz Minting Website",
-	description: "Mint your very own Gangskullz!",
+	title: "Off The Grass NFTs",
+	description: "Mint your very own Blasted Buck",
 };
 
 export default function RootLayout({

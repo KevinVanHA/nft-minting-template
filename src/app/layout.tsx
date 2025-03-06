@@ -8,8 +8,8 @@ import { ToastProvider } from "@/components/ui/toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Gangskullz Minting Website",
-	description: "Mint your very own Gangskullz!",
+	title: "Mischief Mythology Minting Website",
+	description: "The misschief is real!",
 };
 
 export default function RootLayout({

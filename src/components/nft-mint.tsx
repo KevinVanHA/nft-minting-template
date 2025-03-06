@@ -141,15 +141,7 @@ export function NftMint(props: Props) {
             {props.description}
           </p>
 
-          {remainingNFTs === null ? (
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              Remaining supply not available
-            </div>
-          ) : (
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              {remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
-            </div>
-          )}
+          
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
@@ -195,7 +187,7 @@ export function NftMint(props: Props) {
               htmlFor="custom-address"
               className={`${useCustomAddress ? "" : "text-gray-400"} cursor-pointer`}
             >
-              Mint to a custom address
+              Mint to a custom wallet
             </Label>
           </div>
           {useCustomAddress && (

@@ -90,7 +90,7 @@ export function NftMint(props: Props) {
   };
 
   if (isTotalSupplyLoading || isMaxSupplyLoading || isRemainingSupplyLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading... Please wait....</div>;
   }
 
   if (props.pricePerToken === null || props.pricePerToken === undefined) {

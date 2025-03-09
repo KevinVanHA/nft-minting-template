@@ -3,7 +3,7 @@ import { polygon } from "thirdweb/chains";
 /**
  * Change this to the contract address of your NFT collection
  */
-export const defaultNftContractAddress = "0xf1360565FC9d0De609581762D4ea45981a28cB7a";
+export const defaultNftContractAddress = "0x4b9e9236E387F6d30551FdC46C3781dEd373CE33";
 
 /**
  * Change this to the chainId that your nft collection is deployed on

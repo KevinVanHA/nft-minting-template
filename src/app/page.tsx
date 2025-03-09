@@ -22,6 +22,7 @@ import { getActiveClaimCondition as getActiveClaimCondition20 } from "thirdweb/e
 import { useReadContract } from "thirdweb/react";
 import Roadmap from '../components/roadmap'
 import AboutSection from "@/components/AboutSection";
+import Utilities from "@/components/utilities";
 
 
 // Add types for the component props
@@ -211,6 +212,10 @@ export default function Home() {
 				<section className="mb-16">
 					
 					<AboutSection />
+				</section>
+        <section className="mb-16">
+					
+					<Utilities />
 				</section>
 
 				<section className="mb-16">

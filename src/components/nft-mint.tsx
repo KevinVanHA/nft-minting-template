@@ -102,7 +102,7 @@ export function NftMint(props: Props) {
   return (
     <div 
       id="nft-mint"
-      className="flex flex-col items-center justify-center min-h-screen relative"
+      className="flex flex-col items-center justify-center min-h-screen relative w-full"
       style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/bg.png)`,
         backgroundSize: 'cover',
@@ -110,7 +110,6 @@ export function NftMint(props: Props) {
         backgroundRepeat: 'no-repeat',
       }}
     >
-     <AboutSection />
       <Card className="w-full max-w-md z-10">
         <CardContent className="pt-6">
           <div className="aspect-square overflow-hidden rounded-lg mb-4 relative">
@@ -131,25 +130,23 @@ export function NftMint(props: Props) {
               />
             )}
           </div>
-          <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm font-semibold">
-            20 pol each
-          </div>
           <h2 className="text-2xl font-bold mb-2 dark:text-white">
             {props.displayName}
           </h2>
           <p className="text-gray-600 dark:text-gray-300 mb-4">
-            {props.description}
+            {props.pricePerToken} each
           </p>
-
-          {remainingNFTs === null ? (
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              Remaining supply not available
-            </div>
-          ) : (
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-              {remainingNFTs} NFT{remainingNFTs !== 1 ? "s" : ""} remaining
-            </div>
-          )}
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+          💨 The Blasted Bucks NFT Collection <br />🚀 420 Total Supply (10 reserved for team/staff, 10 special 1/1s) <br />
+          🔥 Mint Price: First 200 @ $350 | Remaining @ $365 
+           <br />🔗 Blockchain: Polygon 
+           <br />💎 Exclusive Perks for Holders: <br />
+           <br /> ✅ Annual OTG Campout (Food, Beverages, Entertainment, Limited Parking) <br />
+           <br /> ✅ Access to exclusive giveaways & raffles (CBD, Delta-THC products, OTG merch, & more) <br />
+           <br /> ✅ NFT trait-based perks (VIP upgrades, product discounts, event benefits) <br />
+           <br /> ✅ Community-powered Canna Thoughts with Connie Twitter Spaces <br />
+           <br /> ✅ Special online and real-world events Minting Blasted Bucks directly supports the acquisition of OTG land, ensuring long-term value and experiences for our holders.
+          </p>
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center">
@@ -253,11 +250,7 @@ export function NftMint(props: Props) {
               }
               onError={(err) => toast.error(err.message)}
             >
-              Mint {quantity} NFT{quantity > 1 ? "s" : ""} (
-              {remainingNFTs !== null
-                ? `${remainingNFTs} remaining`
-                : "Supply unknown"}
-              )
+              Mint {quantity} NFT{quantity > 1 ? "s" : ""} 
             </ClaimButton>
           ) : (
             <ConnectButton

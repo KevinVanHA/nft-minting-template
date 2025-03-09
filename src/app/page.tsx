@@ -1,5 +1,4 @@
 "use client";
-
 import { NftMint } from "@/components/nft-mint";
 import {
 	defaultChainId,
@@ -21,6 +20,9 @@ import {
 } from "thirdweb/extensions/erc721";
 import { getActiveClaimCondition as getActiveClaimCondition20 } from "thirdweb/extensions/erc20";
 import { useReadContract } from "thirdweb/react";
+import Roadmap from '../components/roadmap'
+import AboutSection from "@/components/AboutSection";
+
 
 // Add types for the component props
 interface NftData {
@@ -82,7 +84,7 @@ export default function Home() {
 	const nftQuery = useReadContract(getNFT, {
 		contract,
 		tokenId,
-		queryOptions: { 
+		queryOptions: {
 			enabled: !!isERC1155Query.data,
 		},
 	});
@@ -98,14 +100,14 @@ export default function Home() {
 
 	const claimCondition721 = useReadContract(getActiveClaimCondition721, {
 		contract,
-		queryOptions: { 
+		queryOptions: {
 			enabled: !!isERC721Query.data,
 		},
 	});
 
 	const claimCondition20 = useReadContract(getActiveClaimCondition20, {
 		contract,
-		queryOptions: { 
+		queryOptions: {
 			enabled: isERC721Query.isSuccess && !isERC721Query.data && isERC1155Query.isSuccess && !isERC1155Query.data,
 		},
 	});
@@ -149,7 +151,7 @@ export default function Home() {
 			: null;
 
 	// Add loading state check
-	const isLoading = 
+	const isLoading =
 		isERC721Query.isLoading ||
 		isERC1155Query.isLoading ||
 		contractMetadataQuery.isLoading ||
@@ -157,7 +159,7 @@ export default function Home() {
 		(!!currency && currencyMetadata.isLoading);
 
 	// Add error handling
-	const error = 
+	const error =
 		isERC721Query.error ||
 		isERC1155Query.error ||
 		contractMetadataQuery.error ||
@@ -204,12 +206,34 @@ export default function Home() {
 	};
 
 	return (
-		<NftMint
-			contract={contract}
-			{...nftData}
-			isERC1155={!!isERC1155Query.data}
-			isERC721={!!isERC721Query.data}
-			tokenId={tokenId}
-		/>
+		<div className="min-h-screen bg-gradient-to-b from-white to-gray-50 py-12 px-4 w-full">
+			<div className="max-w-6xl mx-auto">
+				<section className="mb-16">
+					
+					<AboutSection />
+				</section>
+
+				<section className="mb-16">
+					
+					<Roadmap />
+				</section>
+
+				<section className="w-full bg-white/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+					
+						<h2 className="text-4xl font-bold text-center mb-8">Mint Your NFT</h2>
+						<div className="w-full">
+							<NftMint
+								contract={contract}
+								{...nftData}
+								isERC1155={!!isERC1155Query.data}
+								isERC721={!!isERC721Query.data}
+								tokenId={tokenId}
+							/>
+						</div>
+					
+				</section>
+			</div>
+		</div>
 	);
 }
+

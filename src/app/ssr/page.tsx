@@ -20,7 +20,7 @@ import {
 } from "thirdweb/extensions/erc721";
 import { getActiveClaimCondition as getActiveClaimCondition20 } from "thirdweb/extensions/erc20";
 import { useReadContract } from "thirdweb/react";
-import Roadmap from '../components/roadmap'
+import Roadmap from '@/components/roadmap'
 import AboutSection from "@/components/AboutSection";
 
 

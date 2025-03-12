@@ -14,7 +14,6 @@ import {
 	ClaimButton,
 	ConnectButton,
 	MediaRenderer,
-	NFT,
 	useActiveAccount,
 } from "thirdweb/react";
 import { client } from "@/lib/thirdwebClient";
@@ -32,7 +31,6 @@ type Props = {
 	isERC1155: boolean;
 	isERC721: boolean;
 	tokenId: bigint;
-    isMintClosed: boolean;
 };
 
 export function NftMint(props: Props) {
@@ -67,25 +65,20 @@ export function NftMint(props: Props) {
 		return null;
 	}
 	return (
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto p-4 bg-[#8400e9] transition-colors duration-200 items-start min-h-screen">
-				<Card className="w-full h-fit">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto p-4 bg-[#8400e9] transition-colors duration-200 items-start min-h-screen">			
+			<Card className="w-full h-fit">
 				<CardContent className="pt-6">
 					<div className="aspect-square overflow-hidden rounded-lg relative">
 						{props.isERC1155 ? (
 							<MediaRenderer
-								client={client}
-								className="w-full h-full object-cover"
-								alt=""
-								src={
-									props.contractImage || "/placeholder.svg?height=400&width=400"
-								}
-							>
-								<React.Suspense
-									fallback={<Skeleton className="w-full h-full object-cover" />}
-								>
-									<div className="w-full h-full bg-gray-200 animate-pulse" />
-								</React.Suspense>
-							</MediaRenderer>
+							client={client}
+							className="w-full h-full object-cover"
+							alt=""
+							src={
+							  props.contractImage || "/placeholder.svg?height=400&width=400"
+							}
+						
+						  />
 						) : (
 							<MediaRenderer
 								client={client}

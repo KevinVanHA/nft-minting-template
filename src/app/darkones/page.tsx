@@ -129,7 +129,6 @@ export default function EAC() {
 				isERC1155={!!isERC1155Query.data}
 				isERC721={!!isERC721Query.data}
 				tokenId={tokenId}
-				isMintClosed={isMintClosed} // Pass the mint status
 			/>
 		</div>
 	);

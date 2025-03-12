@@ -65,8 +65,7 @@ export function NftMint(props: Props) {
 		return null;
 	}
 	return (
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto p-4 bg-[#8400e9] transition-colors duration-200 items-center min-h-screen">
-			<Card className="w-full h-fit">
+		<Card className="flex flex-col md:flex-row gap-8 max-w-4xl mx-auto my-auto p-4 bg-[#050505] transition-colors duration-200 items-center min-h-fit w-full">
 				<CardContent className="pt-6">
 					<div className="aspect-square overflow-hidden rounded-lg relative">
 						{props.isERC1155 ? (
@@ -94,18 +93,17 @@ export function NftMint(props: Props) {
 						</div>
 					</div>
 				</CardContent>
-			</Card>
 
-			<Card className="w-full h-40vh">
 				<CardContent className="pt-6 space-y-4">
-					<div className="mb-4 flex flex-col gap-4">
+					<div className="mb-4 flex flex-col gap-4 text-white">
 							{props.pricePerToken} {props.currencySymbol}/each
 						</div>
-					<h2 className="text-2xl font-bold mb-2 dark:text-white">
+					<h2 className="text-2xl font-bold mb-2 text-white">
 						{props.displayName}
 					</h2>
 					
 					<div className="flex items-center justify-between mb-4">
+					
 						<div className="flex items-center">
 							<Button
 								variant="outline"
@@ -133,12 +131,13 @@ export function NftMint(props: Props) {
 							>
 								<Plus className="h-4 w-4" />
 							</Button>
+							
 						</div>
-						<div className="text-base pr-1 font-semibold dark:text-white">
+						
+					</div>
+					<div className="text-base pr-1 font-semibold text-white">
 							Total: {props.pricePerToken * quantity} {props.currencySymbol}
 						</div>
-					</div>
-
 					<div className="flex items-center space-x-2 mb-4">
 						<Switch
 							id="custom-address"
@@ -164,11 +163,9 @@ export function NftMint(props: Props) {
 							/>
 						</div>
 					)}
-				</CardContent>
-				<CardFooter>
 					{account ? (
 						<ClaimButton
-							theme={"light"}
+							theme={"dark"}
 							contractAddress={props.contract.address}
 							chain={props.contract.chain}
 							client={props.contract.client}
@@ -196,7 +193,7 @@ export function NftMint(props: Props) {
 											}
 							}
 							style={{
-								backgroundColor: "black",
+								backgroundColor: "purple",
 								color: "white",
 								width: "100%",
 							}}
@@ -215,8 +212,7 @@ export function NftMint(props: Props) {
 							connectButton={{ style: { width: "100%" } }}
 						/>
 					)}
-				</CardFooter>
-			</Card>
-		</div>
+				</CardContent>
+		</Card>
 	);
 }

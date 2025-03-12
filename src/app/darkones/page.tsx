@@ -114,22 +114,27 @@ export default function EAC() {
 	const isMintClosed = pricePerToken === null || pricePerToken === undefined;
 
 	return (
-		<div className="bg-[#8400e9] my-auto">
-			{/* Navigation Menu */}
+		<div className="bg-[#8400e9] min-h-screen flex flex-col">
+			{/* Navigation Menu - stays at top */}
 			<NavigationMenu />
-
-			{/* NFT Mint Component */}
-			<NftMint
-				contract={contract}
-				displayName={displayName || ""}
-				contractImage={contractMetadataQuery.data?.image || ""}
-				description={description || ""}
-				currencySymbol={currencySymbol}
-				pricePerToken={pricePerToken}
-				isERC1155={!!isERC1155Query.data}
-				isERC721={!!isERC721Query.data}
-				tokenId={tokenId}
-			/>
+	
+			{/* Flex spacer that pushes content to center */}
+			<div className="flex-grow flex items-center justify-center">
+				{/* NFT Mint Component */}
+				<div>
+					<NftMint
+						contract={contract}
+						displayName={displayName || ""}
+						contractImage={contractMetadataQuery.data?.image || ""}
+						description={description || ""}
+						currencySymbol={currencySymbol}
+						pricePerToken={pricePerToken}
+						isERC1155={!!isERC1155Query.data}
+						isERC721={!!isERC721Query.data}
+						tokenId={tokenId}
+					/>
+				</div>
+			</div>
 		</div>
 	);
 }

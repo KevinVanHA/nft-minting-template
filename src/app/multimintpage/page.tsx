@@ -97,7 +97,6 @@ export default function MultiMintPage() {
                 isERC1155={nft.isERC1155}
                 isERC721={nft.isERC721}
                 tokenId={nft.tokenId}
-                isMintClosed={nft.pricePerToken === null || nft.pricePerToken === undefined}
               />
             );
           })}

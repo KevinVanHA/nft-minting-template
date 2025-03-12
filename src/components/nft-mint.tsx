@@ -65,7 +65,7 @@ export function NftMint(props: Props) {
 		return null;
 	}
 	return (
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto p-4 bg-[#8400e9] transition-colors duration-200 items-start min-h-screen">			
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto p-4 bg-[#8400e9] transition-colors duration-200 items-center min-h-screen">
 			<Card className="w-full h-fit">
 				<CardContent className="pt-6">
 					<div className="aspect-square overflow-hidden rounded-lg relative">
@@ -96,7 +96,7 @@ export function NftMint(props: Props) {
 				</CardContent>
 			</Card>
 
-			<Card className="w-full h-fit">
+			<Card className="w-full h-40vh">
 				<CardContent className="pt-6 space-y-4">
 					<div className="mb-4 flex flex-col gap-4">
 							{props.pricePerToken} {props.currencySymbol}/each

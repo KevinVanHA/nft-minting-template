@@ -114,7 +114,7 @@ export default function EAC() {
 	const isMintClosed = pricePerToken === null || pricePerToken === undefined;
 
 	return (
-		<div className="bg-[#8400e9]">
+		<div className="bg-[#8400e9] my-auto">
 			{/* Navigation Menu */}
 			<NavigationMenu />
 

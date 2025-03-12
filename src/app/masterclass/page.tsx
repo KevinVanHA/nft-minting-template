@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { NftMint } from "@/components/nft-mint";
 import { NavigationMenu } from "@/components/NavigationMenu";
@@ -23,7 +23,7 @@ import {
 import { getActiveClaimCondition as getActiveClaimCondition20 } from "thirdweb/extensions/erc20";
 import { useReadContract } from "thirdweb/react";
 
-export default function LittleOnes() {
+export default function EAC() {
 	const tokenId = defaultTokenId;
 	const chain = defineChain(defaultChainId);
 	const contract = getContract({
@@ -87,15 +87,18 @@ export default function LittleOnes() {
 			? claimCondition721.data?.currency
 			: claimCondition20.data?.currency;
 
-	const currencyContract = getContract({
-		address: currency || "",
-		chain,
-		client,
-	});
-
+	// Check if we have a valid currency
+	const hasCurrency = !!currency;
+	
+	// Always use the main contract (or any valid contract) to get a valid contract reference 
+	// that satisfies type requirements, but disable the query if there's no currency
 	const currencyMetadata = useReadContract(getCurrencyMetadata, {
-		contract: currencyContract,
-		queryOptions: { enabled: !!currency },
+		contract: currency 
+			? getContract({ address: currency, chain, client }) 
+			: contract, // Use main contract as fallback to satisfy type requirements
+		queryOptions: { 
+			enabled: hasCurrency 
+		},
 	});
 
 	const currencySymbol = currencyMetadata.data?.symbol || "";
@@ -110,7 +113,7 @@ export default function LittleOnes() {
 	const isMintClosed = pricePerToken === null || pricePerToken === undefined;
 
 	return (
-		<div>
+		<div className="bg-[#8400e9]">
 			{/* Navigation Menu */}
 			<NavigationMenu />
 

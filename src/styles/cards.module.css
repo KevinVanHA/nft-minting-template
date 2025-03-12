@@ -69,7 +69,8 @@
 .content {
 	margin-top: 40px;
 	padding: 20px;
-	background-color: #1f1f1f;
+	background-color: #8400e9;
 	border-radius: 10px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	height: 100vh;
 }

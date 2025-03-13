@@ -66,7 +66,7 @@ export function NftMint(props: Props) {
 	}
 	return (
 		<Card className="flex flex-col md:flex-row gap-0 max-w-5xl max-h-4xl mx-auto my-auto p-4 bg-[#050505] transition-colors duration-200 items-center min-h-fit w-full">
-				<CardContent className="pt-6	 w-[500px] h-[500px]" >
+				<CardContent className="pt-6 w-[400px] h-[400px]" >
 					<div className="aspect-square overflow-hidden rounded-lg relative">
 						{props.isERC1155 ? (
 							<MediaRenderer
@@ -94,7 +94,7 @@ export function NftMint(props: Props) {
 					</div>
 				</CardContent>
 
-				<CardContent className="pt-6 space-y-4 w-[500px] h-[500px] flex flex-col justify-center items-center">
+				<CardContent className="pt-6 space-y-4 w-[400px] h-[400px] flex flex-col justify-center items-center">
 					<div className="mb-4 flex flex-col gap-4 text-white">
 							{props.pricePerToken} {props.currencySymbol}/each
 						</div>

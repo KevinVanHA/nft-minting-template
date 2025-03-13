@@ -121,7 +121,8 @@ export default function EAC() {
 			{/* Flex spacer that pushes content to center */}
 			<div className="flex-grow flex items-center justify-center">
 				{/* NFT Mint Component */}
-				<div>
+				
+					
 					<NftMint
 						contract={contract}
 						displayName={displayName || ""}
@@ -135,6 +136,5 @@ export default function EAC() {
 					/>
 				</div>
 			</div>
-		</div>
 	);
 }

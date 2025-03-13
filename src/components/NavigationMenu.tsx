@@ -36,7 +36,7 @@ export function NavigationMenu() {
                 </li>
                 <li className={styles.navItem}>
                     <Link href="/eac" className={styles.navLink}>
-                        EAC Trait Collection
+                        EAC Aliens
                     </Link>
                     <div className={styles.dropdown}>
                         {/* Dropdown content */}

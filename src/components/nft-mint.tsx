@@ -65,7 +65,7 @@ export function NftMint(props: Props) {
 		return null;
 	}
 	return (
-		<Card className="flex flex-col md:flex-row gap-0 max-w-3xl mx-auto my-auto p-4 bg-[#050505] transition-colors duration-200 items-center min-h-fit w-full">
+		<Card className="flex flex-col md:flex-row gap-0 max-w-5xl max-h-4xl mx-auto my-auto p-4 bg-[#050505] transition-colors duration-200 items-center min-h-fit w-full">
 				<CardContent className="pt-6">
 					<div className="aspect-square overflow-hidden rounded-lg relative">
 						{props.isERC1155 ? (
